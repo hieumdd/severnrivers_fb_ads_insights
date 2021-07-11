@@ -1,0 +1,22 @@
+{
+    "key": {
+        "p_key": [
+            "id", "ad_id"
+        ],
+        "incremental_key": "_batched_at"
+    },
+    "field": {
+        "fields": [
+            "id",
+            "asset_feed_spec",
+            "object_story_spec",
+            "body",
+            "image_url",
+            "name",
+            "link_url",
+            "title",
+            "thumbnail_url",
+            "object_url"
+        ]
+    }
+}
