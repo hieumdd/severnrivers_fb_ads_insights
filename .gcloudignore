@@ -1,7 +1,2 @@
-.DS_store
-.vscode/
-exports/
-backup/
-creds/
-backup/
-tmp/
+.github
+test

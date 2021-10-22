@@ -1,13 +1,11 @@
-name: deploy
+name: CI/CD
 on:
   push:
     branches: [master]
   workflow_dispatch:
 
 env:
-  FUNCTIONS_NAME: SevernRivers_Facebook
-  REGION: us-central1
-  API_VER: v11.0
+  FUNCTION_NAME: severnrivers_fb_ads_insights
 
 jobs:
   setup:
@@ -26,11 +24,11 @@ jobs:
         run: >-
           gcloud functions deploy ${{ env.FUNCTIONS_NAME }}
           --entry-point=main
-          --region=${{ env.REGION }}
+          --region=us-central1
           --timeout=530
           --project=${{ secrets.PROJECT_ID }}
-          --memory=1024MB
-          --runtime=python38
+          --memory=512MB
+          --runtime=python39
           --trigger-http
           --service-account=${{ secrets.GCP_SA }}
-          --set-env-vars=ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }},API_VER=${{ env.API_VER }}
+          --set-env-vars=ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }}
