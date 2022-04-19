@@ -5,8 +5,8 @@ import pytest
 from main import main
 from tasks import ACCOUNTS, TABLES
 
-START = "2021-09-01"
-END = "2021-10-01"
+START = "2022-04-10"
+END = "2022-04-19"
 
 
 def run(data):
