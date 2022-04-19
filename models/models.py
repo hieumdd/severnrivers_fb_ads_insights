@@ -8,6 +8,8 @@ from abc import ABCMeta, abstractmethod
 import requests
 from google.cloud import bigquery
 
+from secret_manager.doppler import get_access_token
+
 NOW = datetime.utcnow()
 DATE_FORMAT = "%Y-%m-%d"
 
@@ -75,7 +77,6 @@ class FacebookAdsInsights(metaclass=ABCMeta):
     def _get_report_request(self, session, attempt=0):
         def _send_report_request():
             params = {
-                "access_token": os.getenv("ACCESS_TOKEN"),
                 "level": "ad",
                 "fields": json.dumps(self.fields),
                 "action_attribution_windows": json.dumps(self.windows),
@@ -126,9 +127,6 @@ class FacebookAdsInsights(metaclass=ABCMeta):
         def _poll_report_request(report_run_id):
             with session.get(
                 f"{BASE_URL}/{report_run_id}",
-                params={
-                    "access_token": os.getenv("ACCESS_TOKEN"),
-                },
             ) as r:
                 res = r.json()
             if (
@@ -149,7 +147,6 @@ class FacebookAdsInsights(metaclass=ABCMeta):
 
     def _get_insights(self, session, report_run_id, after=None):
         params = {
-            "access_token": os.getenv("ACCESS_TOKEN"),
             "limit": 500,
         }
         if after:
@@ -207,6 +204,9 @@ class FacebookAdsInsights(metaclass=ABCMeta):
 
     def run(self):
         with requests.Session() as session:
+            session.params = {
+                "access_token": get_access_token(),
+            }
             rows = self._get_insights(session, self._get_report_request(session))
         response = {
             "table": self.table,
