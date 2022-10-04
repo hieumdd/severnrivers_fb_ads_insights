@@ -13,7 +13,7 @@ from secret_manager.doppler import get_access_token
 NOW = datetime.utcnow()
 DATE_FORMAT = "%Y-%m-%d"
 
-API_VER = "v12.0"
+API_VER = "v14.0"
 BASE_URL = f"https://graph.facebook.com/{API_VER}/"
 
 BQ_CLIENT = bigquery.Client()
